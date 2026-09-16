@@ -1,13 +1,26 @@
-const DIM = 10
-let chi
+let chi;
 
 async function setup() {
-    chi = await loadImage("./assets/chicago.jpg")
     createCanvas(500, 500);
+    chi = await loadImage("./assets/chicago.jpg");
+    chi.resize(50, 50);
+    noSmooth()
 }
 
 function draw() {
-    background(220);
+    let newChi = sortPixels(chi)
+    image(newChi, 0, 0, width, height);
+    noLoop()
+}
 
-    image(chi, 0, 0, width, height)
+function sortPixels(img){
+    let newImg = createImage(img.width, img.height)
+    newImg.loadPixels()
+    for (let x = 0; x < img.width; x++) {
+        for (let y = 0; y < img.height; y++) {
+            newImg.set(x, y, img.get(x, y))
+        }
+    }
+    newImg.updatePixels()
+    return newImg
 }
