@@ -21,19 +21,41 @@ function blob(x, y, r) {
 
 const scl = 1.3
 
+let bgpicker, fgpicker
+let saveBtn
+
 function setup() {
     createCanvas(400*scl, 500*scl);
     angleMode(DEGREES)
+
+    bgpicker = createColorPicker()
+    fgpicker = createColorPicker("red")
+
+    saveBtn = createButton("save")
+    saveBtn.mousePressed(saveImg);
 }
 
 function draw(){
-    background("#00272B");
+    background(bgpicker.color());
 
     noFill()
-    stroke("#e0ff4f0f")
+    let col = color(fgpicker.value() + "0f")
+    stroke(col)
     strokeWeight(5)
     for (let i = 0; i < 500; i++) {
         const r = i * 1.5
         blob(width / 3, height / 4, r)
+    }
+    noLoop()
+}
+
+function saveImg(){
+    saveCanvas(`zach-${Date.now()}`, "png")
+}
+
+function keyPressed(){
+    if (key == " "){
+        noiseSeed(random(100000))
+        redraw()
     }
 }
