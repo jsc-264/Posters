@@ -1,6 +1,6 @@
 function blob(x, y, r) {
     beginShape()
-    for (let a = 0; a < 360; a+=18) {
+    for (let a = 0; a < 360; a += 360 / 20) {
         // we cant use translate here cause noise values must be positive
         const nx = (r * cos(a) + x) / 200
         const ny = (r * sin(a) + y) / 200
@@ -23,39 +23,40 @@ const scl = 1.3
 
 let bgpicker, fgpicker
 let saveBtn
+let redoBtn
 
 function setup() {
-    createCanvas(400*scl, 500*scl);
+    createCanvas(400 * scl, 500 * scl);
     angleMode(DEGREES)
 
     bgpicker = createColorPicker()
-    fgpicker = createColorPicker("red")
+    bgpicker.changed(redraw)
+    fgpicker = createColorPicker("lightgreen")
+    fgpicker.changed(redraw)
 
-    saveBtn = createButton("save")
-    saveBtn.mousePressed(saveImg);
+    saveBtn = createButton("save").mousePressed(saveImg)
+    redoBtn = createButton("redo").mousePressed(redo)
 }
 
-function draw(){
+function draw() {
     background(bgpicker.color());
 
     noFill()
-    let col = color(fgpicker.value() + "0f")
+    let col = color(fgpicker.value() + "77")
     stroke(col)
-    strokeWeight(5)
+    strokeWeight(2)
     for (let i = 0; i < 500; i++) {
         const r = i * 1.5
         blob(width / 3, height / 4, r)
     }
-    noLoop()
+    noloop()
 }
 
-function saveImg(){
-    saveCanvas(`zach-${Date.now()}`, "png")
+function saveImg() {
+    saveCanvas("zach-"+Date.now(), "png")
 }
 
-function keyPressed(){
-    if (key == " "){
-        noiseSeed(random(100000))
-        redraw()
-    }
+function redo() {
+    noiseSeed(random(100000))
+    redraw()
 }
