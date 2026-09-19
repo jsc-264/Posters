@@ -41,13 +41,18 @@ function setup() {
 function draw() {
     background(bgpicker.color());
 
+    noiseSeed(random(100))
+
+    let cx = random(width)
+    let cy = random(height)
+
     noFill()
     let col = color(fgpicker.value() + "77")
     stroke(col)
     strokeWeight(2)
     for (let i = 0; i < 500; i++) {
         const r = i * 1.5
-        blob(width / 3, height / 4, r)
+        blob(cx, cy, r)
     }
     noloop()
 }
@@ -57,6 +62,5 @@ function saveImg() {
 }
 
 function redo() {
-    noiseSeed(random(100000))
     redraw()
 }
