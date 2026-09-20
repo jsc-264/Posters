@@ -21,46 +21,55 @@ function blob(x, y, r) {
 
 const scl = 1.3
 
-let bgpicker, fgpicker
+// let bgpicker, fgpicker
 let saveBtn
-let redoBtn
+// let redoBtn
+
+let cx, cy
 
 function setup() {
     createCanvas(400 * scl, 500 * scl);
     angleMode(DEGREES)
+    colorMode(HSB)
 
-    bgpicker = createColorPicker()
-    bgpicker.changed(redraw)
-    fgpicker = createColorPicker("lightgreen")
-    fgpicker.changed(redraw)
+    // bgpicker = createColorPicker()
+    // bgpicker.changed(redraw)
+    // fgpicker = createColorPicker("lightgreen")
+    // fgpicker.changed(redraw)
 
-    saveBtn = createButton("save").mousePressed(saveImg)
-    redoBtn = createButton("redo").mousePressed(redo)
+    // saveBtn = createButton("save").mousePressed(saveImg)
+    // redoBtn = createButton("redo").mousePressed(redo)
+
+    cx = random(width)
+    cy = random(height)
 }
 
 function draw() {
-    background(bgpicker.color());
+    for (let i = 0; i < 100; i++) {
+        background(random(360), 70, 100);
 
-    noiseSeed(random(100))
+        noiseSeed(random(100))
 
-    let cx = random(width)
-    let cy = random(height)
-
-    noFill()
-    let col = color(fgpicker.value() + "77")
-    stroke(col)
-    strokeWeight(2)
-    for (let i = 0; i < 500; i++) {
-        const r = i * 1.5
-        blob(cx, cy, r)
+        noFill()
+        let col = color(random(360), 70, 100, 90)
+        stroke(col)
+        strokeWeight(2)
+        for (let i = 0; i < 500; i++) {
+            const r = i * 1.5
+            blob(cx, cy, r)
+        }
+        saveCanvas("zach-" + i, "png")
     }
-    noloop()
+    noLoop()
 }
 
-function saveImg() {
-    saveCanvas("zach-"+Date.now(), "png")
-}
+// function saveImg() {
+//     saveCanvas("zach-"+Date.now(), "png")
+// }
 
-function redo() {
-    redraw()
-}
+// function redo() {
+//     cx = random(width)
+//     cy = random(height)
+//     noiseSeed(random(100))
+//     redraw()
+// }
