@@ -1,6 +1,6 @@
-function blob(x, y, r) {
+function blob(x, y, r, points=20) {
     beginShape()
-    for (let a = 0; a < 360; a += 360 / 20) {
+    for (let a = 0; a < 360; a += 360 / points) {
         // we cant use translate here cause noise values must be positive
         const nx = (r * cos(a) + x) / 200
         const ny = (r * sin(a) + y) / 200
@@ -21,10 +21,6 @@ function blob(x, y, r) {
 
 const scl = 1.3
 
-// let bgpicker, fgpicker
-let saveBtn
-// let redoBtn
-
 let cx, cy
 
 function setup() {
@@ -32,44 +28,43 @@ function setup() {
     angleMode(DEGREES)
     colorMode(HSB)
 
-    // bgpicker = createColorPicker()
-    // bgpicker.changed(redraw)
-    // fgpicker = createColorPicker("lightgreen")
-    // fgpicker.changed(redraw)
-
-    // saveBtn = createButton("save").mousePressed(saveImg)
-    // redoBtn = createButton("redo").mousePressed(redo)
-
     cx = random(width)
     cy = random(height)
 }
 
 function draw() {
-    for (let i = 0; i < 100; i++) {
-        background(random(360), 70, 100);
+    background(random(360), random(30, 60), random(50, 100));
 
-        noiseSeed(random(100))
+    let p = floor(random(4, 20))
 
-        noFill()
-        let col = color(random(360), 70, 100, 90)
-        stroke(col)
-        strokeWeight(2)
-        for (let i = 0; i < 500; i++) {
-            const r = i * 1.5
-            blob(cx, cy, r)
-        }
-        saveCanvas("zach-" + i, "png")
+    noFill()
+    let col = color(random(360), random(50, 70), random(50, 100), 5)
+    stroke(col)
+    strokeWeight(1.5)
+    for (let i = 0; i < 500; i++) {
+        const r = i * 1.5
+        blob(cx, cy, r, points=p)
     }
-    noLoop()
+    noloop()
 }
 
-// function saveImg() {
-//     saveCanvas("zach-"+Date.now(), "png")
-// }
+function saveImg() {
+    saveCanvas("zach-"+Date.now(), "png")
+}
 
-// function redo() {
-//     cx = random(width)
-//     cy = random(height)
-//     noiseSeed(random(100))
-//     redraw()
-// }
+function redo() {
+    cx = random(width)
+    cy = random(height)
+    noiseSeed(random(100))
+    redraw()
+}
+
+function keyPressed(){
+    if (key == " "){
+        redo()
+    }
+
+    if (key == "s"){
+        saveImg()
+    }
+}
