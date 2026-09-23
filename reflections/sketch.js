@@ -1,15 +1,26 @@
-let start
+let r
 
 function setup() {
     createCanvas(400, 600);
     colorMode(HSB)
-    start = height/2
-    fill(0, 0, 100)
-    noStroke()
+    angleMode(DEGREES)
+    stroke(0, 0, 100)
+    noFill()
+
+    r = new Ray(0, height / 2)
+
+    background(100, 70, 70);
+
+    while (r.running) {
+        r.update()
+    }
+    r.render()
+
+
+
 }
 
-function draw() {
-    background(100, 70, 70);
-    circle(0, start, 5)
-    // noLoop()
-}
+// function draw() {
+//     background(100, 70, 70);
+//     // noLoop()
+// }
