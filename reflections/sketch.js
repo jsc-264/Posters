@@ -1,4 +1,4 @@
-let r
+let rays = []
 
 function setup() {
     createCanvas(400, 600);
@@ -7,14 +7,26 @@ function setup() {
     stroke(0, 0, 100)
     noFill()
 
-    r = new Ray(0, height / 2)
+    const avgAngle = random(360)
+    for (let i = 0; i < 10; i++) {
+        const [x, y] = getStartCoords()
+        const x = 0
+        const y = i * 10 + 50
+        const angle = avgAngle
+
+        rays.push(new Ray(x, y, angle))
+
+
+    }
 
     background(100, 70, 70);
 
-    while (r.running) {
-        r.update()
+    for (let r of rays) {
+        while (r.running) {
+            r.update()
+        }
+        r.render()
     }
-    r.render()
 
 
 

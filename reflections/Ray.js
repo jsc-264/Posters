@@ -1,11 +1,10 @@
 class Ray {
-    constructor(x, y) {
+    constructor(x, y, angle) {
         this.pos = createVector(x, y)
-        this.vel = createVector(10, 0)
-        this.vel.rotate(random(-90, 90))
+        this.vel = p5.Vector.fromAngle(angle)
 
         this.bounces = 0
-        this.maxBounces = 1
+        this.maxBounces = 2
 
         this.running = true
 
