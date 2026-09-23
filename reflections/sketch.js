@@ -1,22 +1,16 @@
-let rays = []
-let numRays = 150
-
-let side
-
-
 function setup() {
+    const sx = random(width)
+    const sy = random(height)
+    const startAngle = random(360)
+    const spacing = 0
+    let numRays = 500
+    let side = random(["top", "right", "bottom", "left"])
+
     createCanvas(400, 600);
     colorMode(HSB)
     angleMode(DEGREES)
-    stroke(0, 0, 100, 10)
-    noFill()
 
-
-    side = random(["top", "right", "bottom", "left"])
-    const sx = random(width)
-    const sy = random(height)
-    const spacing = 3
-    const avgAngle = random(360)
+    let rays = []
     for (let i = 0; i < numRays; i++) {
         let x, y
         switch (side) {
@@ -41,7 +35,8 @@ function setup() {
                 break;
 
         }
-        const angle = avgAngle + random(-0.05, 0.05)
+
+        let angle = startAngle + random(-0.05, 0.05)
 
         rays.push(new Ray(x, y, angle))
 
@@ -49,6 +44,8 @@ function setup() {
     }
 
     background(100, 70, 70);
+    stroke(0, 0, 100, 0.1)
+    noFill()
 
     for (let r of rays) {
         while (r.running) {
@@ -61,8 +58,3 @@ function setup() {
 
 
 }
-
-// function draw() {
-//     background(100, 70, 70);
-//     // noLoop()
-// }

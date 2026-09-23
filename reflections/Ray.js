@@ -1,10 +1,9 @@
 class Ray {
     constructor(x, y, angle) {
         this.pos = createVector(x, y)
-        this.vel = p5.Vector.fromAngle(angle)
+        this.vel = p5.Vector.fromAngle(angle).setMag(1)
 
-        this.bounces = 0
-        this.maxBounces = 2
+        this.maxBounces = 4
 
         this.running = true
 
@@ -12,41 +11,45 @@ class Ray {
     }
 
     edges() {
-        if (this.bounces < this.maxBounces) {
+        let bounced = false
+        if (this.points.length <= this.maxBounces) {
             if (this.pos.x < 0) {
                 this.vel.x *= -1
-                this.bounces++
-                this.points.push(this.pos.copy())
+                bounced = true
             }
 
             if (this.pos.x > width) {
                 this.vel.x *= -1
-                this.bounces++
-                this.points.push(this.pos.copy())
+                bounced = true
             }
 
             if (this.pos.y < 0) {
                 this.vel.y *= -1
-                this.bounces++
-                this.points.push(this.pos.copy())
+                bounced = true
             }
 
             if (this.pos.y > height) {
                 this.vel.y *= -1
-                this.bounces++
-                this.points.push(this.pos.copy())
+                bounced = true
             }
         } else {
             if (this.pos.x < 0 || this.pos.x > width || this.pos.y < 0 || this.pos.y > height) {
                 this.running = false
             }
         }
+        return bounced
     }
 
     update() {
+        let rand = 1/100
         if (this.running) {
-            this.edges()
+            let bounced = this.edges()
             this.pos.add(this.vel)
+
+            if (bounced) {
+                this.vel.rotate(this.vel.heading() + random(-rand, rand))
+                this.points.push(this.pos.copy())
+            }
         }
     }
 
