@@ -16,21 +16,25 @@ class Ray {
             if (this.pos.x < 0) {
                 this.vel.x *= -1
                 this.bounces++
+                this.points.push(this.pos.copy())
             }
 
             if (this.pos.x > width) {
                 this.vel.x *= -1
                 this.bounces++
+                this.points.push(this.pos.copy())
             }
 
             if (this.pos.y < 0) {
                 this.vel.y *= -1
                 this.bounces++
+                this.points.push(this.pos.copy())
             }
 
             if (this.pos.y > height) {
                 this.vel.y *= -1
                 this.bounces++
+                this.points.push(this.pos.copy())
             }
         } else {
             if (this.pos.x < 0 || this.pos.x > width || this.pos.y < 0 || this.pos.y > height) {
@@ -43,8 +47,6 @@ class Ray {
         if (this.running) {
             this.edges()
             this.pos.add(this.vel)
-            this.points.push(this.pos.copy())
-            console.log("running")
         }
     }
 
