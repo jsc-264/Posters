@@ -1,63 +1,74 @@
 const numRays = 500
-const spacing = 0.1
+const spacing = 0
 let sx, sy
 let startAngle, side
-let rays = []
 
+function seedRays() {
+    let rays = []
 
-function setup() {
-    sx = random(width)
-    sy = random(height)
-    startAngle = random(360)
-    side = random(["top", "right", "bottom", "left"])
-
-    createCanvas(400, 600);
-    colorMode(HSB)
-    angleMode(DEGREES)
 
     for (let i = 0; i < numRays; i++) {
         let x, y
         switch (side) {
             case "top":
-                x = sx + i * spacing
+                x = sx
                 y = 0
                 break;
             case "right":
                 x = width
-                y = sy + i * spacing
+                y = sy
                 break;
             case "bottom":
-                x = sx + i * spacing
+                x = sx
                 y = height
                 break;
             case "left":
                 x = 0
-                y = sy + i * spacing
+                y = sy
                 break;
 
             default:
                 break;
-
         }
 
-        let angle = startAngle + random(-0.05, 0.05)
+        let range = 0.1
+        let angle = startAngle + random(-range, range)
 
         rays.push(new Ray(x, y, angle))
     }
+
+    return rays
+}
+
+function setup() {
+    createCanvas(400, 600);
+    colorMode(HSB)
+    angleMode(DEGREES)
 }
 
 function draw() {
-    background(100, 70, 70);
-    stroke(0, 0, 100, 0.1)
+    background(random(360), 70, 70);
+    stroke(0, 0, 100, 0.05)
+    strokeWeight(5)
     noFill()
+
+    sx = random(width)
+    sy = random(height)
+    side = random(["top", "right", "bottom", "left"])
+    startAngle = random(360)
+
+    let rays = seedRays()
 
     for (let r of rays) {
         while (r.running) {
             r.update()
         }
         r.render()
-        print(r.points.length)
     }
 
     noLoop()
+}
+
+function mousePressed() {
+    redraw()
 }

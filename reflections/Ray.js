@@ -3,7 +3,7 @@ class Ray {
         this.pos = createVector(x, y)
         this.vel = p5.Vector.fromAngle(angle).setMag(1)
 
-        this.maxBounces = 4
+        this.maxBounces = 5
 
         this.running = true
 
@@ -12,7 +12,7 @@ class Ray {
 
     edges() {
         let bounced = false
-        if (this.points.length <= this.maxBounces) {
+        if (this.points.length < this.maxBounces) {
             if (this.pos.x < 0) {
                 this.vel.x *= -1
                 bounced = true
@@ -41,13 +41,11 @@ class Ray {
     }
 
     update() {
-        let rand = 1/100
         if (this.running) {
             let bounced = this.edges()
             this.pos.add(this.vel)
 
             if (bounced) {
-                this.vel.rotate(this.vel.heading() + random(-rand, rand))
                 this.points.push(this.pos.copy())
             }
         }
