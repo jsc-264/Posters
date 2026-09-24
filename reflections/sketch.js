@@ -2,6 +2,7 @@ const numRays = 500
 const spacing = 0
 let sx, sy
 let startAngle, side
+const scl = 1.5
 
 function seedRays() {
     let rays = []
@@ -41,7 +42,7 @@ function seedRays() {
 }
 
 function setup() {
-    createCanvas(400, 600);
+    createCanvas(600*scl, 400*scl);
     colorMode(HSB)
     angleMode(DEGREES)
 }
@@ -69,6 +70,20 @@ function draw() {
     noLoop()
 }
 
-function mousePressed() {
+function saveImg() {
+    saveCanvas("reflections-" + Date.now(), "png")
+}
+
+function redo() {
     redraw()
+}
+
+function keyPressed() {
+    if (key == " ") {
+        redo()
+    }
+
+    if (key == "s") {
+        saveImg()
+    }
 }

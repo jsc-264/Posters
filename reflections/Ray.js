@@ -3,7 +3,7 @@ class Ray {
         this.pos = createVector(x, y)
         this.vel = p5.Vector.fromAngle(angle).setMag(1)
 
-        this.maxBounces = 5
+        this.maxBounces = floor(random(4, 6))
 
         this.running = true
 
