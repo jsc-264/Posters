@@ -1,21 +1,21 @@
-const COLUMNS = 6
-const ROWS = 4
-let w, h
+const DIM = 5
+let cellW, shapeW
 
 function setup() {
-    createCanvas(600, 400);
-    w = width / COLUMNS
-    h = height / ROWS
+    createCanvas(500, 500);
+    rectMode(CENTER)
+    cellW = width / DIM
+    shapeW = cellW/2
 }
 
 function draw() {
     background(0);
-    for (let j = 0; j < ROWS; j++) {
-        for (let i = 0; i < COLUMNS; i++) {
-            const x = w * i
-            const y = w * j
+    for (let j = 0; j < DIM; j++) {
+        for (let i = 0; i < DIM; i++) {
+            const x = cellW * i + cellW / 2
+            const y = cellW * j + cellW / 2
 
-            rect(x, y, w, h)
+            rect(x, y, shapeW)
         }
     }
 }
