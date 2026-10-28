@@ -1,5 +1,6 @@
-const DIM = 5
-let cellW, shapeW
+const COLS = 4
+const ROWS = 6
+let cellW, cellH, shapeSize
 
 function randShape(x, y, size, order) {
     const colours = [
@@ -33,22 +34,29 @@ function randShape(x, y, size, order) {
 }
 
 function setup() {
-    createCanvas(500, 500);
-    rectMode(CENTER)
+    createCanvas(400, 600);
     blendMode(ADD)
+    rectMode(CENTER)
     noStroke()
-    cellW = width / DIM
-    shapeW = cellW / 2
+    frameRate(3)
+    cellW = width / COLS
+    cellH = height / ROWS
+    shapeW = min(cellW, cellH) / 2
 }
 
 function draw() {
     background(0);
-    for (let j = 0; j < DIM; j++) {
-        for (let i = 0; i < DIM; i++) {
+    for (let j = 0; j < ROWS; j++) {
+        for (let i = 0; i < COLS; i++) {
             const x = cellW * i + cellW / 2
-            const y = cellW * j + cellW / 2
+            const y = cellH * j + cellH / 2
 
-            randShape(x, y, shapeW+random(-40, 40), ["R", "R", "R"])
+            let order = []
+            for (let i = 0; i < 3; i++){
+                order.push(random(["R", "C"]))
+            }
+
+            randShape(x, y, shapeW+random(-20, 20), order)
         }
     }
     noLoop()
