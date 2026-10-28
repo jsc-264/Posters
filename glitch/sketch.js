@@ -17,11 +17,11 @@ function randShape(x, y, n) {
 
     let maxI = round(map(n, 0, 1, 0, order.length))
 
-    for (let i = 0; i < maxI; i++){
+    for (let i = 0; i < maxI; i++) {
         order[i] = "C"
     }
 
-    const size = map(n, 0, 1, minDim/8, minDim*1.25)
+    const size = map(n, 0, 1, minDim/3, minDim * 1.3)
 
     let scl = map(size, 1, minDim, -30, 30)
 
@@ -41,8 +41,7 @@ function randShape(x, y, n) {
 
         const col = colours[i]
         const off = (i * scl) - scl
-        // scl += random(-10, 10)
-        let a = map(n, 0, 1, 0, PI/2)
+        let a = map(n, 0, 1, 0, PI / 2)
 
         push()
         translate(x, y)
@@ -71,11 +70,19 @@ function draw() {
             const x = cellW * i + cellW / 2
             const y = cellH * j + cellH / 2
 
-            const div = map(COLS*ROWS, 4, 4000, .001, 40)
-            const n = noise(i / div, j / div)
+            // const div = map(COLS*ROWS, 4, 4000, 1, 100)
+            const n = noise(i / 30, j / 30)
             randShape(x, y, n)
         }
     }
+    filter(BLUR, 0);
     blendMode(BLEND)
     noLoop()
+}
+
+function keyPressed() {
+    if (key == " ") {
+        noiseSeed(random(10000))
+        redraw()
+    }
 }
