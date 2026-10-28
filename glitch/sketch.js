@@ -1,15 +1,16 @@
 const COLS = 4
 const ROWS = 6
-let cellW, cellH, shapeSize
+let cellW, cellH
 
 function randShape(x, y, size, order) {
+    let colVal = random(200, 255)
     const colours = [
-        color(255, 0, 0),
-        color(0, 255, 0),
-        color(0, 0, 255)
+        color(colVal, 0, 0),
+        color(0, colVal, 0),
+        color(0, 0, colVal)
     ]
 
-    const scl = map(size, 0, cellW, 2, 10) + (random(2, 5) * random([-1, 1]))
+    let scl = map(size, 0, cellW, 2, 10) + (random(2, 5) * random([-1, 1]))
 
     for (let i = 0; i < order.length; i++) {
         let shape
@@ -27,6 +28,7 @@ function randShape(x, y, size, order) {
 
         const col = colours[i]
         const off = (i * scl) - scl
+        scl += random(-10, 10)
 
         fill(col)
         shape(x + off, y + off, size)
@@ -41,7 +43,6 @@ function setup() {
     frameRate(3)
     cellW = width / COLS
     cellH = height / ROWS
-    shapeW = min(cellW, cellH) / 2
 }
 
 function draw() {
@@ -56,7 +57,7 @@ function draw() {
                 order.push(random(["R", "C"]))
             }
 
-            randShape(x, y, shapeW+random(-20, 20), order)
+            randShape(x, y, random(20, min(cellW, cellH)/1.1), order)
         }
     }
     noLoop()
